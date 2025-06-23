@@ -1,305 +1,297 @@
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap");
+
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Open Sans", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
 }
+
 body {
-    height: 100vh;
-    width: 100%;
-    background: url("../images/Wedding.jpeg") center/cover no-repeat;
+  height: 100vh;
+  width: 100%;
+  background: url("../images/Wedding.jpeg") center/cover no-repeat;
+  overflow-x: hidden;
+  color: #333; /* Default body text color, but we'll override it for the form */
 }
-header {
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 10;
-    padding: 0 10px;
+
+/* Login Button */
+.standalone-login {
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
 }
-.navbar {
-    display: flex;
-    padding: 22px 0;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    justify-content: space-between;
-    right: 20px;
-    font-size: 30px;
+
+.standalone-login-btn {
+  padding: 12px 24px;
+  background: linear-gradient(90deg, #fbe7d4, #ecd0be);
+  color: #5e4b3c;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
-.navbar .hamburger-btn {
-    display: none;
-    color: #fff;
-    cursor: pointer;
-    font-size: 1.5rem;
+
+.standalone-login-btn:hover {
+  background: linear-gradient(90deg, #ecd0be, #fbe7d4);
+  transform: scale(1.05);
 }
-.navbar .logo {
-    gap: 10px;
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-}
-.navbar .logo img {
-    width: 40px;
-    border-radius: 50%;
-}
-.navbar .logo h2 {
-    color: #fff;
-    font-weight: 600;
-    font-size: 1.7rem;
-}
-.navbar .links {
-    display: flex;
-    gap: 35px;
-    list-style: none;
-    align-items: center;
-}
-.navbar .close-btn {
-    position: absolute;
-    right: 20px;
-    top: 20px;
-    display: none;
-    color: #000;
-    cursor: pointer;
-}
-.navbar .links a {
-    color: #fff;
-    font-size: 1.1rem;
-    font-weight: 500;
-    text-decoration: none;
-    transition: 0.1s ease;
-}
-.navbar .links a:hover {
-    color: #19e8ff;
-}
-.navbar .login-btn {
-    border: none;
-    outline: none;
-    background: #fff;
-    color: #275360;
-    font-size: 1rem;
-    font-weight: 600;
-    padding: 10px 18px;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: 0.15s ease;
-}
-.navbar .login-btn:hover {
-    background: #ddd;
-}
-.form-popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    z-index: 10;
-    width: 100%;
-    opacity: 0;
-    pointer-events: none;
-    max-width: 720px;
-    background: #fff;
-    border: 2px solid #fff;
-    transform: translate(-50%, -70%);
-}
-.show-popup .form-popup {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translate(-50%, -50%);
-    transition: transform 0.3s ease, opacity 0.1s;
-}
-.form-popup .close-btn {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    color: #878484;
-    cursor: pointer;
-}
+
+/* Background blur overlay */
 .blur-bg-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 10;
-    height: 100%;
-    width: 100%;
-    opacity: 0;
-    pointer-events: none;
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    transition: 0.1s ease;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  pointer-events: none;
+  backdrop-filter: blur(6px);
+  transition: opacity 0.3s ease;
 }
+
 .show-popup .blur-bg-overlay {
-    opacity: 1;
-    pointer-events: auto;
+  opacity: 1;
+  pointer-events: auto;
 }
-.form-popup .form-box {
-    display: flex;
+
+/* Popup Container */
+.form-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 100;
+  max-width: 750px;
+  width: 95%;
+  background: #fff; /* Original background - will be overridden by .form-content */
+  border-radius: 12px;
+  transform: translate(-50%, -60%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
-.form-box .form-details {
-    width: 100%;
-    color: #fff;
-    max-width: 330px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+
+.show-popup .form-popup {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
 }
-.login .form-details {
-    padding: 0 40px;
-    background: url("../images/Wedding\ inside.webp");
-    background-position: center;
-    background-size: cover;
+
+/* Close Button */
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 22px;
+  color: white; /* Changed close button to white for better contrast */
+  cursor: pointer;
+  z-index: 101; /* Ensure it's above the form content */
+  text-shadow: 0 0 5px rgba(0,0,0,0.5); /* Add a subtle shadow for visibility */
 }
-.signup .form-details {
-    padding: 0 20px;
-    background: url("../images/Wedding\ inside.webp");
-    background-position: center;
-    background-size: cover;
+
+/* Form Panels */
+.form-box {
+  display: flex;
+  width: 100%;
 }
-.form-box .form-content {
-    width: 100%;
-    padding: 35px;
+
+/* Image background container */
+.form-details {
+  width: 40%;
+  background: url("../images/Wedding inside.webp") center/cover no-repeat;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
 }
-.form-box h2 {
-    text-align: center;
-    margin-bottom: 29px;
+
+/* Add overlay to darken image and improve text contrast */
+.form-details::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4); /* Darken the image further */
+  z-index: 1;
 }
-form .input-field {
-    position: relative;
-    height: 50px;
-    width: 100%;
-    margin-top: 20px;
+
+.form-details > * {
+  z-index: 2; /* Ensure text is above the overlay */
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
+
+/* Glassy text block within form-details */
+.form-details h2,
+.form-details p {
+  color: #fff; /* Explicitly set text inside form-details to white */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); /* Keep shadow for readability */
+}
+
+.blur-box {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 24px 18px;
+  text-align: center;
+  color: #fff; /* This should already be white from the above rule, but double-check */
+  max-width: 90%;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  /* MODIFICATION: Arrange content in a column */
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Add some space between the title and description */
+}
+
+/* Main form content */
+.form-content {
+  width: 60%;
+  padding: 40px;
+  background: rgba(0, 0, 0, 0.4); /* Darker, semi-transparent background for the form content */
+  backdrop-filter: blur(8px); /* Apply a blur effect */
+  -webkit-backdrop-filter: blur(8px); /* For Safari */
+  border-radius: 12px; /* Match the form's border radius */
+
+  justify-content: center;
+}
+
+.form-content h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: white; /* Set form content headings to white */
+  text-align: center;
+  text-shadow: 0 0 5px rgba(0,0,0,0.7); /* Add subtle shadow for white text on blurred background */
+}
+
+/* Inputs */
+.input-field {
+  margin-bottom: 18px;
+  position: relative;
+}
+
 .input-field input {
-    height: 100%;
-    width: 100%;
-    background: none;
-    outline: none;
-    font-size: 0.95rem;
-    padding: 0 15px;
-    border: 1px solid #717171;
-    border-radius: 3px;
+  width: 100%;
+  height: 45px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, 0.6); /* Lighter border for contrast */
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: rgba(255, 255, 255, 0.85); /* Slightly less transparent white background for inputs */
+  color: #333; /* Text inside input fields should be dark for readability */
+  transition: border-color 0.3s ease;
 }
+
 .input-field input:focus {
-    border: 1px solid #00bcd4;
+  border-color: #00bcd4;
+  outline: none;
 }
-.input-field label {
-    position: absolute;
-    top: 50%;
-    left: 15px;
-    transform: translateY(-50%);
-    color: #4a4646;
-    pointer-events: none;
-    transition: 0.2s ease;
-}
-.input-field input:is(:focus, :valid) {
-    padding: 16px 15px 0;
-}
-.input-field input:is(:focus, :valid)~label {
-    transform: translateY(-120%);
-    color: #00bcd4;
-    font-size: 0.75rem;
-}
+
+/* Links */
 .form-box a {
-    color: #00bcd4;
-    text-decoration: none;
+  color: #c9eaff; /* Lighter blue for links for better visibility on dark blur */
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: color 0.3s ease;
 }
+
 .form-box a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
+  color: #8ed0f2; /* Slightly different hover color */
 }
-form :where(.forgot-pass-link, .policy-text) {
-    display: inline-flex;
-    margin-top: 13px;
-    font-size: 0.95rem;
+
+.forgot-pass-link {
+  display: inline-block;
+  margin-bottom: 15px;
 }
+
+.policy-text {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  margin-top: 10px;
+  color: white; /* Set policy text to white */
+}
+
+.policy-text input[type="checkbox"] {
+  margin-right: 8px;
+  accent-color: #00bcd4; /* Change checkbox color */
+}
+
+/* For placeholder text */
+.input-field input::placeholder {
+  color: #555; /* Darker placeholder text for inputs */
+  opacity: 1; /* Ensure full opacity for placeholder */
+}
+
+/* Form Button */
 form button {
-    width: 100%;
-    color: #fff;
-    border: none;
-    outline: none;
-    padding: 14px 0;
-    font-size: 1rem;
-    font-weight: 500;
-    border-radius: 3px;
-    cursor: pointer;
-    margin: 25px 0;
-    background: #00bcd4;
-    transition: 0.2s ease;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: #00bcd4;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
+
 form button:hover {
-    background: #0097a7;
+  background-color: #0097a7;
 }
-.form-content .bottom-link {
-    text-align: center;
+
+.bottom-link {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 0.95rem;
+  color: white; /* Ensure this text is also white */
 }
+
+/* Toggle login/signup */
 .form-popup .signup,
 .form-popup.show-signup .login {
-    display: none;
+  display: none;
 }
+
 .form-popup.show-signup .signup {
-    display: flex;
+  display: flex;
 }
-.signup .policy-text {
-    display: flex;
-    margin-top: 14px;
-    align-items: center;
-}
-.signup .policy-text input {
-    width: 14px;
-    height: 14px;
-    margin-right: 7px;
-}
-@media (max-width: 950px) {
-    .navbar :is(.hamburger-btn, .close-btn) {
-        display: block;
-    }
-    .navbar {
-        padding: 15px 0;
-    }
-    .navbar .logo img {
-        display: none;
-    }
-    .navbar .logo h2 {
-        font-size: 1.4rem;
-    }
-    .navbar .links {
-        position: fixed;
-        top: 0;
-        z-index: 10;
-        left: -100%;
-        display: block;
-        height: 100vh;
-        width: 100%;
-        padding-top: 60px;
-        text-align: center;
-        background: #fff;
-        transition: 0.2s ease;
-    }
-    .navbar .links.show-menu {
-        left: 0;
-    }
-    .navbar .links a {
-        display: inline-flex;
-        margin: 20px 0;
-        font-size: 1.2rem;
-        color: #000;
-    }
-    .navbar .links a:hover {
-        color: #00BCD4;
-    }
-    .navbar .login-btn {
-        font-size: 0.9rem;
-        padding: 7px 10px;
-    }
-}
+
+/* Responsive adjustments */
 @media (max-width: 760px) {
-    .form-popup {
-        width: 95%;
-    }
-    .form-box .form-details {
-        display: none;
-    }
-    .form-box .form-content {
-        padding: 30px 20px;
-    }
+  .form-popup {
+    flex-direction: column;
+    width: 92%;
+  }
+
+  .form-details {
+    display: none;
+  }
+
+  .form-content {
+    width: 100%;
+    padding: 30px 20px;
+  }
+}
+
+
+.form-details {
+  display: flex;
+  flex-direction: column;
 }

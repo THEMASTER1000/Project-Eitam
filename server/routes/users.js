@@ -9,7 +9,7 @@ router.post('/register', async (req, res) => {
   const sql = 'INSERT INTO users (username, email, password) VALUES (?, ?, ?)';
   db.query(sql, [username, email, password], (err, result) => {
     if (err) return res.status(500).json({ error: 'שגיאה ביצירת משתמש' });
-    res.json({ message: 'משתמש נוצר בהצלחה' });
+    res.json({ message: 'משתמש נוצר בהצלחה' , userId: result.insertId });
   });
 });
 

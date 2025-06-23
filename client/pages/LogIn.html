@@ -1,142 +1,80 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website with Login and Registration Form | Wedding Lists</title>
-    <!-- Google Fonts Link For Icons -->
-    <link rel="stylesheet" href="../css/LogIn.css">
-    <script src="../js/LogIn.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login & Registration | Wedding List</title>
+  <link rel="stylesheet" href="../css/LogIn.css" />
 </head>
 <body>
-    <header>
-        <nav class="navbar">
-            <span class="hamburger-btn material-symbols-rounded">menu</span>
-            <h2 style="position: absolute;right: 600px;color:white">Wedding List</h2>
-            <ul class="links">
-                <span class="close-btn material-symbols-rounded">close</span>
-                <li><a href="./index.html" style="right: 20ex;">Home</a></li>
-                <li><a href="#">Profile</a></li>
-                <li><a href="../pages/list.html"> List</a></li>
-                <li><a href="../pages/AboutUs.html">About us</a></li>
-            </ul>
-            <button class="login-btn">LOG IN</button>
-        </nav>
-    </header>
 
-    <div class="blur-bg-overlay"></div>
-    <!-- Form Popup -->
-    <div class="form-popup">
-        <span class="close-btn material-symbols-rounded">close</span>
-        
-        <!-- Login Form -->
-        <div class="form-box login">
-            <div class="form-details">
-                <h2>Welcome Back</h2>
-                <p>Please log in using your personal information to stay connected with us.</p>
-            </div>
-            <div class="form-content">
-                <h2>LOGIN</h2>
-                <form action="#" method="post" id="login-form">
-                    <div class="input-field">
-                        <input type="email" name="email" required placeholder="Enter your email">
-                    </div>
-                    <div class="input-field">
-                        <input type="password" name="password" id="login-password" required>
-                        <label>Password</label>
-                    </div>
-                    <a href="#" class="forgot-pass-link">Forgot password?</a>
-                    <button type="submit">Log In</button>
-                </form>
-                <div class="bottom-link">
-                    Don't have an account?
-                    <a href="#" id="signup-link">Signup</a>
-                </div>
-            </div>
-        </div>
+  <!-- Navigation element (unchanged) -->
+  <custom-nav></custom-nav>
+  <script src="../nav/nav.js"></script>
 
-        <!-- Signup Form -->
-        <div class="form-box signup">
-            <div class="form-details">
-                <h2>Create Account</h2>
-                <p>To become a part of our community, please sign up using your personal information.</p>
-            </div>
-            <div class="form-content">
-                <h2>SIGNUP</h2>
-                <form action="#" method="post" id="signup-form">
-                    <div class="input-field">
-                        <input type="email" name="email"  required placeholder="Enter your email">
-                    </div>
-                    <div class="input-field">
-                        <input type="password" name="password" id="signup-password" required placeholder="Create password">
-                    </div>
-                    <div class="input-field">
-                        <input type="password" name="confirm-password" id="confirm-password" required placeholder="Confirm your password">
-                    </div>
-                    <div class="policy-text">
-                        <input type="checkbox" id="policy" required>
-                        <label for="policy">
-                            I agree to the
-                            <a href="#" class="option">Terms & Conditions</a>
-                        </label>
-                    </div>
-                    <button type="submit">Sign Up</button>
-                </form>
-                <div class="bottom-link">
-                    Already have an account?
-                    <a href="#" id="login-link">Login</a>
-                </div>
-            </div>
+
+  <!-- Overlay -->
+  <div class="blur-bg-overlay"></div>
+
+  <!-- Authentication Popup -->
+  <div class="form-popup">
+
+    <!-- Login Form -->
+    <div class="form-box login">
+      <div class="form-details">
+        <h2>Welcome Back</h2>
+        <p>Please sign in to manage your wedding list.</p>
+      </div>
+      <div class="form-content">
+        <h2>Log In</h2>
+        <form id="login-form">
+          <div class="input-field">
+            <input type="email" name="email" required placeholder="Enter your email" />
+          </div>
+          <div class="input-field">
+            <input type="password" name="password" id="login-password" required placeholder="Password" />
+          </div>
+          <a href="#" class="forgot-pass-link">Forgot password?</a>
+          <button type="submit">Log In</button>
+        </form>
+        <div class="bottom-link">
+          Don’t have an account? <a href="#" id="signup-link">Sign Up</a>
         </div>
+      </div>
     </div>
 
-    <script>
-        // Toggle between Login and Signup Forms
-        const signupLink = document.getElementById("signup-link");
-        const loginLink = document.getElementById("login-link");
-        const loginform = document.querySelector(".form-box.login");
-        const signupform = document.querySelector(".form-box.signup");
+    <!-- Signup Form -->
+    <div class="form-box signup">
+      <div class="form-details">
+        <h2>Create Account</h2>
+        <p>Join us and start building your wedding list today.</p>
+      </div>
+      <div class="form-content">
+        <h2>Sign Up</h2>
+        <form id="signup-form">
+          <div class="input-field">
+            <input type="email" name="email" required placeholder="Enter your email" />
+          </div>
+          <div class="input-field">
+            <input type="password" name="password" id="signup-password" required placeholder="Create password" />
+          </div>
+          <div class="input-field">
+            <input type="password" name="confirm-password" id="confirm-password" required placeholder="Confirm password" />
+          </div>
+          <div class="policy-text">
+            <input type="checkbox" id="policy" required />
+            <label for="policy">I agree to the <a href="#">Terms & Conditions</a></label>
+          </div>
+          <button type="submit">Sign Up</button>
+        </form>
+        <div class="bottom-link">
+          Already have an account? <a href="#" id="login-link">Log In</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        signupLink.addEventListener('click', () => {
-            loginForm.style.display = 'none';
-            signupForm.style.display = 'block';
-        });
-
-        loginLink.addEventListener('click', () => {
-            signupForm.style.display = 'none';
-            loginForm.style.display = 'block';
-        });
-
-        // Login Form Validation
-        const loginForm = document.getElementById('login-form');
-        loginForm.addEventListener('submit', function(e) {
-            const password = document.getElementById('login-password').value;
-            if (password.length < 6) {
-                e.preventDefault(); // Prevent form submission
-                alert("Password must be at least 6 characters long.");
-            }
-        });
-
-        // Signup Form Validation
-        const signupForm = document.getElementById('signup-form');
-        signupForm.addEventListener('submit', function(e) {
-            const password = document.getElementById('signup-password').value;
-            const confirmPassword = document.getElementById('confirm-password').value;
-
-            // Check if password meets the criteria
-            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
-            if (!passwordRegex.test(password)) {
-                e.preventDefault(); // Prevent form submission
-                alert("Password must be at least 8 characters long, include one uppercase letter, one lowercase letter, and one number.");
-                return;
-            }
-
-            // Check if passwords match
-            if (password !== confirmPassword) {
-                e.preventDefault(); // Prevent form submission
-                alert("Passwords do not match!");
-            }
-        });
-    </script>
+  <!-- Script -->
+  <script src="../js/login.js" defer></script>
 </body>
 </html>

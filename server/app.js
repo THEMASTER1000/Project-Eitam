@@ -18,13 +18,22 @@ app.use(express.static(clientPath));
 app.get('/', (req, res) => {
     res.sendFile(path.join(clientPath, 'pages', 'index.html'));
 });
+
+app.get('/nav.html', (req, res) => {
+    res.sendFile(path.join(clientPath, 'nav', 'nav.html'));
+});
+
+app.get('/nav.css', (req, res) => {
+    res.sendFile(path.join(clientPath, 'nav', 'nav.css'));
+});
 app.get('/:page', (req, res) => {
     const page = req.params.page + '.html';
     const filePath = path.join(clientPath, 'pages', page);
+    const file404Path = path.join(clientPath, 'pages', '404.html');
 
     res.sendFile(filePath, (err) => {
         if (err) {
-            res.status(404).send('Page not found');
+            res.status(404).sendFile(file404Path);
         }
     });
 });

@@ -1,27 +1,26 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>RSVP</title>
-  <script type='text/javascript' src='app.js'></script>
-  <link rel="stylesheet" href="../css/list.css">
-  <script src="../js/list.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RSVP List</title>
+  <link rel="stylesheet" href="../css/list.css" />
 </head>
-
 <body>
   <div class="wrapper">
-    <header>
-      <h1> Wedding Guest List</h1>
+    <custom-nav></custom-nav>
+    <main class="main">
+      <h1>Guest List</h1>
+
       <form id="registrar">
-        <input type="text" name="name" placeholder="Invite Someone">
-        <button type="submit" name="submit" value="submit">Submit</button>
+        <input type="text" placeholder="Invite Someone" required />
+        <button type="submit">Add</button>
       </form>
-    </header>
 
-    <div class="main">
-      <h2>Invitees</h2>
       <ul id="invitedList"></ul>
-    </div>
+    </main>
   </div>
-</body>
 
+  <script src="../js/list.js"></script>
+</body>
 </html>

@@ -1,96 +1,93 @@
-  const navbarMenu = document.querySelector(".navbar .links");
-const hamburgerBtn = document.querySelector(".hamburger-btn");
-const hideMenuBtn = navbarMenu.querySelector(".close-btn");
-const showPopupBtn = document.querySelector(".login-btn");
-const formPopup = document.querySelector(".form-popup");
-const hidePopupBtn = formPopup.querySelector(".close-btn");
-const signupLoginLink = formPopup.querySelectorAll(".bottom-link a");
-// Show mobile menu
-hamburgerBtn.addEventListener("click", () => {
-    navbarMenu.classList.toggle("show-menu");
-});
-// Hide mobile menu
-hideMenuBtn.addEventListener("click", () =>  hamburgerBtn.click());
-// Show login popup
-showPopupBtn.addEventListener("click", () => {
-    document.body.classList.toggle("show-popup");
-});
-// Hide login popup
-hidePopupBtn.addEventListener("click", () => showPopupBtn.click());
-// Show or hide signup form
-signupLoginLink.forEach(link => {
+window.addEventListener("DOMContentLoaded", () => {
+  const showPopupBtn = document.querySelector(".login-btn") || document.querySelector(".standalone-login-btn");
+  const formPopup = document.querySelector(".form-popup");
+  const hidePopupBtn = document.querySelector(".form-popup .close-btn");
+  const signupLoginLinks = document.querySelectorAll(".bottom-link a");
+ 
+  window.addEventListener('load', () => {
+    document.body.classList.add("show-popup");
+  });
+
+  // Toggle between login and signup forms
+  signupLoginLinks?.forEach(link => {
     link.addEventListener("click", (e) => {
-        e.preventDefault();
-        formPopup.classList[link.id === 'signup-link' ? 'add' : 'remove']("show-signup");
+      e.preventDefault();
+      const formWrapper = document.querySelector(".form-popup");
+      const isSignup = link.id === "signup-link";
+      formWrapper.classList.toggle("show-signup", isSignup);
     });
-});
-loginForm?.addEventListener("submit", async (e) => {
+  });
+
+  // Handle login form
+  const loginForm = document.getElementById("login-form");
+  loginForm?.addEventListener("submit", async (e) => {
     e.preventDefault();
-  
-    const email = loginForm.querySelector('input[type="email"]').value;
-    const password = loginForm.querySelector('input[type="password"]').value;
-  
+    const email = loginForm.email.value;
+    const password = loginForm.password.value;
+
+    if (password.length < 6) {
+      alert("Password must be at least 6 characters long.");
+      return;
+    }
+
     try {
       const response = await fetch("http://localhost:3000/api/users/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email, password }),
       });
-  
+
       const data = await response.json();
-  
       if (response.ok) {
-        alert(data.message || "התחברת בהצלחה!");
-        // ניתן לשמור טוקן או מזהה משתמש כאן:
-        // localStorage.setItem("token", data.token);
-        window.location.href = "list.html";
+        console.log(data.message || "Successfully logged in!");
+        localStorage.setItem("userId", data.userId);
+        window.location.href = "/list";
       } else {
-        alert(data.error || "שגיאה בהתחברות");
+        console.error(data.error || "Login error.");
       }
     } catch (err) {
-      alert("שגיאה בשרת: " + err.message);
-      console.error(err);
+      console.error("Server error: " + err.message);
     }
   });
+
+  // Handle signup form
+  const signupForm = document.getElementById("signup-form");
   signupForm?.addEventListener("submit", async (e) => {
     e.preventDefault();
+    const email = signupForm.email.value;
+    const password = signupForm.password.value;
+    const confirmPassword = signupForm["confirm-password"].value;
 
-    const email = signupForm.querySelector('input[name="email"]').value;
-    const password = signupForm.querySelector('input[name="password"]').value;
-    const confirmPassword = signupForm.querySelector('input[name="confirm-password"]').value;
-
-    // בדיקת סיסמה כמו שכבר יש בקוד שלך
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
+    const passwordRegex = /^.{6,}$/;
     if (!passwordRegex.test(password)) {
-        alert("Password must be at least 8 characters long, include one uppercase letter, one lowercase letter, and one number.");
-        return;
+      alert("Password must be at least 6 characters long.");
+      return;
     }
 
     if (password !== confirmPassword) {
-        alert("Passwords do not match!");
-        return;
+      alert("Passwords do not match.");
+      return;
     }
 
-    // צור שם משתמש מהאימייל (או תוכל להוסיף שדה נפרד לטופס)
-    const username = email.split('@')[0];
+    const username = email.split("@")[0];
 
     try {
-        const response = await fetch("http://localhost:3000/api/users/register", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username, email, password })
-        });
+      const response = await fetch("http://localhost:3000/api/users/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, email, password }),
+      });
 
-        const data = await response.json();
-
-        if (response.ok) {
-            alert(data.message || "נרשמת בהצלחה!");
-            formPopup.classList.remove("show-signup"); // חזור למסך התחברות
-        } else {
-            alert(data.error || "שגיאה בהרשמה");
-        }
+      const data = await response.json();
+      if (response.ok) {
+        console.log(data.message || "Successfully registered!");
+        localStorage.setItem("userId", data.userId);
+        window.location.href = "/list";
+      } else {
+        console.error(data.error || "Signup error.");
+      }
     } catch (err) {
-        alert("שגיאה בשרת: " + err.message);
-        console.error(err);
+      console.error("Server error: " + err.message);
     }
+  });
 });
